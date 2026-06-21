@@ -1,0 +1,7 @@
+@echo off
+REM === Plain SSH shell to VPS ===
+REM EDIT THESE TWO LINES:
+set "VPS_HOST=YOUR_VPS_IP"
+set "SSH_KEY=%USERPROFILE%\.ssh\id_ed25519"
+
+ssh -i "%SSH_KEY%" root@%VPS_HOST%

@@ -1,0 +1,13 @@
+@echo off
+REM === Cloak CDP proxy (nginx, port 8081) ===
+REM For debugging — agents normally use this through CLOAK_CDP_PROXY_BASE env on VPS.
+REM
+REM EDIT THESE TWO LINES:
+set "VPS_HOST=YOUR_VPS_IP"
+set "SSH_KEY=%USERPROFILE%\.ssh\id_ed25519"
+
+set "LOCAL_PORT=8081"
+set "REMOTE_PORT=8081"
+
+echo  CDP proxy: http://localhost:%LOCAL_PORT% (Bearer token auto-injected by nginx)
+ssh -i "%SSH_KEY%" -N -L %LOCAL_PORT%:127.0.0.1:%REMOTE_PORT% root@%VPS_HOST%

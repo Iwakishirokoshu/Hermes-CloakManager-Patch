@@ -1,0 +1,8 @@
+@echo off
+REM === Run verify.sh smoke test on VPS ===
+REM EDIT THESE TWO LINES:
+set "VPS_HOST=YOUR_VPS_IP"
+set "SSH_KEY=%USERPROFILE%\.ssh\id_ed25519"
+
+ssh -i "%SSH_KEY%" root@%VPS_HOST% "bash /opt/hermes-cloak-patch/scripts/verify.sh"
+pause

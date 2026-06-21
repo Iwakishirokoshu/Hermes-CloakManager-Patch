@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hermes-plugin-cloak"
+version = "0.1.1"
+description = "Hermes plugin: CloakBrowser-Manager profile control + humanized browser_* tool overrides using pydoll-ported motor math"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "HermesMulti Project" },
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+  "httpx>=0.27",
+  "playwright>=1.53",
+  # cloakbrowser provides the patched Chromium binary AND the async humanize
+  # surface (patch_browser_async). We replace its mouse_async + keyboard_async
+  # via sys.modules hook to inject pydoll-derived math.
+  "cloakbrowser>=0.3",
+]
+
+[project.optional-dependencies]
+hybrid = [
+  # Phase 1.5 — adds tab.request / tab.extract / tab.find_shadow_roots tools.
+  "pydoll-python>=2.20",
+]
+dev = [
+  "pytest>=7",
+  "pytest-asyncio>=0.21",
+  "pytest-httpx>=0.30",
+]
+
+[project.entry-points."hermes_agent.plugins"]
+# Must resolve to a module with a register(ctx) function — NOT register
+# itself. ep.load() returns the object; Hermes does getattr(module, "register").
+cloak = "hermes_plugin_cloak"
+
+[project.urls]
+Homepage = "https://github.com/HermesMulti/HermesMulti"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["hermes_plugin_cloak*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

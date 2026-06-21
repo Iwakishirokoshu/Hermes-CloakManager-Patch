@@ -1,0 +1,18 @@
+@echo off
+REM === Cloak Manager Web UI ===
+REM Opens SSH tunnel to VPS:8080 and launches your default browser at http://localhost:8080
+REM
+REM EDIT THESE TWO LINES:
+set "VPS_HOST=YOUR_VPS_IP"
+set "SSH_KEY=%USERPROFILE%\.ssh\id_ed25519"
+
+set "LOCAL_PORT=8080"
+set "REMOTE_PORT=8080"
+
+echo.
+echo  Cloak Manager: http://localhost:%LOCAL_PORT%
+echo  (token: ssh -i "%SSH_KEY%" root@%VPS_HOST% "cat /etc/cloak/auth_token")
+echo.
+
+start "" "http://localhost:%LOCAL_PORT%"
+ssh -i "%SSH_KEY%" -N -L %LOCAL_PORT%:127.0.0.1:%REMOTE_PORT% root@%VPS_HOST%

@@ -1,0 +1,7 @@
+@echo off
+REM Copy to config.bat and edit
+set "VPS_HOST=YOUR_VPS_IP"
+set "VPS_USER=root"
+set "SSH_KEY=C:\Users\YOU\.ssh\id_ed25519"
+set "PORT_CLOAK_MANAGER=8080"
+set "PORT_HERMES_DASH=9119"

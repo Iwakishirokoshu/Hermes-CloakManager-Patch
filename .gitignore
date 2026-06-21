@@ -1,0 +1,42 @@
+# Python build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+*.egg-info/
+*.egg
+.venv/
+venv/
+build/
+dist/
+.tox/
+
+# Local environment / secrets — must NEVER be committed
+.env
+*.local.env
+*.private.env
+config/manager.env
+/etc-cloak-*
+
+# VPS-specific client folders (kept locally for the maintainer, never published)
+client/vps-*/
+client/*.bat
+!client/*.bat.example
+!client/config.bat.example
+!client/connect-cloak.bat
+!client/connect-dashboard.bat
+
+# IDE / OS junk
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Test outputs
+.coverage
+htmlcov/
+coverage.xml
+*.cover

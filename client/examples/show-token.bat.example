@@ -1,0 +1,13 @@
+@echo off
+REM === Print the current CLOAK_AUTH_TOKEN from VPS ===
+REM EDIT THESE TWO LINES:
+set "VPS_HOST=YOUR_VPS_IP"
+set "SSH_KEY=%USERPROFILE%\.ssh\id_ed25519"
+
+echo.
+echo  CLOAK_AUTH_TOKEN on %VPS_HOST%:
+echo  ---------------------------------------------------------------
+ssh -i "%SSH_KEY%" root@%VPS_HOST% "cat /etc/cloak/auth_token 2>/dev/null || grep CLOAK_AUTH_TOKEN /etc/cloak/manager.env | sed 's/CLOAK_AUTH_TOKEN=//'"
+echo  ---------------------------------------------------------------
+echo.
+pause

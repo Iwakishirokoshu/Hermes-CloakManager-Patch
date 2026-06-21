@@ -1,0 +1,23 @@
+# Optional Hermes Telegram gateway unit.
+# Copy to /etc/systemd/system/hermes-gateway.service and fill in the
+# Telegram bot token in /root/.hermes/.env (or wherever Hermes is installed).
+# The cloak patch only writes a drop-in (10-cloak-env.conf) for env loading;
+# this template is a minimal starting unit if you don't have one yet.
+
+[Unit]
+Description=Hermes Telegram gateway
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root
+EnvironmentFile=-/root/.hermes/.env
+EnvironmentFile=-/etc/cloak/manager.env
+ExecStart=/usr/local/bin/hermes gateway start --transport telegram
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

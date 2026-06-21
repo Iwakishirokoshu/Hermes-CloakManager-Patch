@@ -1,0 +1,25 @@
+# Auth-injecting reverse proxy for CloakBrowser-Manager.
+# Native Hermes agent-browser cannot set Authorization on WebSocket upgrade,
+# so this localhost-only proxy injects Bearer server-side.
+# __CLOAK_AUTH_TOKEN__ is substituted by install.sh.
+# The connection-upgrade map lives in /etc/nginx/conf.d/cloak-upgrade-map.conf
+# because the map directive is only allowed in http {} scope.
+
+server {
+    listen 127.0.0.1:8081;
+    server_name _;
+
+    proxy_read_timeout  86400;
+    proxy_send_timeout  86400;
+    proxy_buffering off;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Authorization "Bearer __CLOAK_AUTH_TOKEN__";
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $http_connection;
+    }
+}
