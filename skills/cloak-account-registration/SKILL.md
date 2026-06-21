@@ -110,5 +110,5 @@ Reason: <captcha / passkey / page error>.
 ## Связи с другими скиллами
 
 - **`cloak-proxy-pool`** — атомарная выдача прокси из пула, если регистрация требует разные IP на каждый аккаунт.
-- **`notletters-api`** — получить OTP-код с почты во время email-верификации.
+- **`notletters-api`** — OTP с почты. **Обязательно:** используй `email:password` **ящика из задачи пользователя**, не admin NotLetters и не веб `notletters.com`. CLI: `$PY $NL wait user@domain:pass --sender ... --since-now`.
 - Site-target скиллы (если есть) — добавляют конкретные селекторы, URL, особенности конкретного сайта.

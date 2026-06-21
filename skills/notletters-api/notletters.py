@@ -62,7 +62,11 @@ def get_api_key() -> str:
     for var in ("NOTLETTERS_API_KEY", "NL_KEY"):
         if os.environ.get(var):
             return os.environ[var]
-    for path in (Path("/etc/notletters.env"), Path.home() / "nl_key.txt"):
+    for path in (
+        Path("/etc/cloak/manager.env"),
+        Path("/etc/notletters.env"),
+        Path.home() / "nl_key.txt",
+    ):
         if path.exists():
             content = _read_envfile(path) if path.suffix == ".env" or path.name.endswith(".env") else {}
             for var in ("NOTLETTERS_API_KEY", "NL_KEY"):
@@ -74,9 +78,12 @@ def get_api_key() -> str:
                     return txt
             except OSError:
                 pass
+    venv_py = "/usr/local/lib/hermes-agent/venv/bin/python"
     print(
-        "error: NotLetters API key not found. Put it in /etc/notletters.env "
-        "as NOTLETTERS_API_KEY=... (chmod 600), or set $NOTLETTERS_API_KEY.",
+        "error: NotLetters API key not found. Put NOTLETTERS_API_KEY in "
+        "/etc/cloak/manager.env or /etc/notletters.env (chmod 600), "
+        "or set $NOTLETTERS_API_KEY.\n"
+        f"Run with Hermes venv:\n  {venv_py} {__file__} ...",
         file=sys.stderr,
     )
     sys.exit(2)
